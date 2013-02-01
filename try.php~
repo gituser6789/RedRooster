@@ -1,0 +1,16 @@
+<html>
+<head>
+<?php
+echo"<form method=post>";
+echo"<input type=text name=txt>";
+echo"<input type=submit name=btn>";
+
+if(isset($_POST['btn']))
+{
+echo strlen($_POST['txt']);
+}
+?>
+
+
+</body>
+</html>

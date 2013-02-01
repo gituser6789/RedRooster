@@ -1,0 +1,18 @@
+<html>
+<head>
+</head>
+<body>
+<table border="1">
+<tr><td>user id</td><td>details</td></tr>
+<tr><td>novaed</td><td><a href="link.html" target="content" onClick="changeContent()">View Details</a></td></tr></div>
+</div>
+<div id="content" src="link.html">
+</div>
+<div id="yourDiv">start blah blah</div>
+<script language="Javascript">
+function changeContent() {
+document.getElementById('yourDiv').innerHTML="your blah blah here!";
+}
+</script>
+</body>
+</html>

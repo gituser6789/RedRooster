@@ -1,0 +1,3 @@
+$db =  mysql_connect("localhost", "root", "root");
+
+mysql_select_db("novaed_asystem",$db);

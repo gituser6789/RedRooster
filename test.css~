@@ -1,0 +1,17 @@
+#banner{
+height:200px;
+width: 100%;
+background-color: red;
+}
+
+#timeform{
+height:80px;
+width: 100%;
+background-color: red;
+}
+
+#tblform{
+height:200px;
+width: 100%;
+background-color: red;
+}

@@ -1,0 +1,20 @@
+<html>
+<body>
+<?php
+
+$txt=1;
+echo"<form method=post>";
+echo"<input type=text name=txt[] view='$txt'><br>";
+echo"<input type=submit name=btn>";
+
+if(isset($_POST['btn']))
+{
+foreach($_POST['txt'] as $arr)
+{
+echo $arr;
+}
+}
+
+?>
+</body>
+</html>
