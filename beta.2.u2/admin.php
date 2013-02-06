@@ -37,16 +37,16 @@ include 'dbconnection.php';
 //retrieve data from database to datagrid
 $result=mysql_query("select distinct user_id from User where type='Student'");
 
-		echo'<div id="timeform">';
-		echo"<div id='banner'><img src='novasys.png'>
-			<a href='reg.php'>Registration</a>
-		     <div class='nav'>";
+echo'<div id="timeform">';
+echo"<div id='banner'><img src='novasys.png'>
+<a href='reg.php'>Registration</a>
+<div class='nav'>";
 echo'
 <form method=post>
 <select name=query><option>User Id</option><option>Last Name</option><option>First Name</option><option>Middle Name</option><option>Class</option></select><input type="textbox" name="txtSearch" id="txtSearch" placeholder="search here"/>';
 echo'<input type="image" name="image" src=search.png height="20px />';
-		echo'<div id="logbtn"><a href=login.php class="log">Sign Out</a>
-     </div>';
+echo'<div id="logbtn"><a href=login.php class="log">Sign Out</a>
+</div>';
 
 //initialize values
 date_default_timezone_set('Asia/Manila');
@@ -56,247 +56,252 @@ $timeout="";
 $ro='readonly';
 //log details
 
-		echo"<div id='container'>";
-		echo"<div class='nav'>";
-			echo"</div></div>";
-		echo"<div id='tblform'>";
+echo"<div id='container'>";
+echo"<div class='nav'>";
+echo"</div></div>";
+echo"<div id='tblform'>";
 //form post
 echo"<form method=post>";
 //buttons
 echo"<span class='redh'><h3>Students' List&emsp;<input type=submit name=btnLogin value=Log class='log'>&emsp;<input type=submit name=btnAdd value=Add class='log'><br/><br/></h3></span>";
 
-echo"<div id='left'><table border=1>"; 
+echo"<div id='left'><table border=1>";
 echo"<th><input type=checkbox id='toggle' value='select' onClick='do_this()' /></th><span class='redh'><th>ID</th></span><span class='redh'><th>Last Name</th></span><span class='redh'><th>First Name</th></span><span class='redh'><th>Middle Name</th></span><span class='redh'><th>Class</th></span><span class='redh'><th>Time</th></span>";
 echo"<br/></div>";
 //search for whom to user_time in/user_time out
 if(isset($_POST['image_x']))
 {	
-	//search for user id
-	if($_POST['query']=='User Id')
-	{
-	$result=mysql_query("select distinct user_id from User where type='Student' and user_id=\"".$_POST['txtSearch']."\"");
-	while($row = mysql_fetch_assoc($result))
-	{
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+//search for user id
+if($_POST['query']=='User Id')
+{
+$result=mysql_query("select distinct user_id from User where type='Student' and user_id=\"".$_POST['txtSearch']."\"");
+while($row = mysql_fetch_assoc($result))
+{
+$id=$row['user_id'];
+$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
-	$lival=mysql_fetch_assoc($logIn);
-	$lival2=$lival['user_time'];
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($lival=="")
-	{$ti="&nbsp";}
-	else
-	{$ti=$lival2;}
-	
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
-	}
-	}
-	}//search for user id end
-	//search for last name
-	if($_POST['query']=='Last Name')
-	{
-	$result=mysql_query("select distinct user_id from User where type='Student' and last_name=\"".$_POST['txtSearch']."\"");
-	while($row = mysql_fetch_assoc($result))
-	{
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+while($row2=mysql_fetch_assoc($result2))
+{
+$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
+$lival=mysql_fetch_assoc($logIn);
+$lival2=$lival['user_time'];
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
-	$lival=mysql_fetch_assoc($logIn);
-	$lival2=$lival['user_time'];
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($lival=="")
-	{$ti="&nbsp";}
-	else
-	{$ti=$lival2;}
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
-	}
-	}
-	}//search for last name end
-	//search for first name
-	if($_POST['query']=='First Name')
-	{
-	$result=mysql_query("select distinct user_id from User where type='Student' and first_name=\"".$_POST['txtSearch']."\"");
-	while($row = mysql_fetch_assoc($result))
-	{
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+if($lival=="")
+{$ti="&nbsp";}
+else
+{$ti=$lival2;}
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
-	$lival=mysql_fetch_assoc($logIn);
-	$lival2=$lival['user_time'];
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($lival=="")
-	{$ti="&nbsp";}
-	else
-	{$ti=$lival2;}
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td>";
-	}
-	}
-	}//search for first name end
-	//search for middle name
-	if($_POST['query']=='Middle Name')
-	{
-	$result=mysql_query("select distinct user_id from User where type='Student' and middle_name=\"".$_POST['txtSearch']."\"");
-	while($row = mysql_fetch_assoc($result))
-	{
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
+}
+}
+}//search for user id end
+//search for last name
+if($_POST['query']=='Last Name')
+{
+$result=mysql_query("select distinct user_id from User where type='Student' and last_name=\"".$_POST['txtSearch']."\"");
+while($row = mysql_fetch_assoc($result))
+{
+$id=$row['user_id'];
+$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
-	$lival=mysql_fetch_assoc($logIn);
-	$lival2=$lival['user_time'];
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($lival=="")
-	{$ti="&nbsp";}
-	else
-	{$ti=$lival2;}
+while($row2=mysql_fetch_assoc($result2))
+{
+$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
+$lival=mysql_fetch_assoc($logIn);
+$lival2=$lival['user_time'];
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
 
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
-	}
-	}
-	}//search for middle name end
-	//search for class
-	if($_POST['query']=='Class')
-	{
-	$result=mysql_query("select distinct user_id from User where type='Student' and class=\"".$_POST['txtSearch']."\"");
-	while($row = mysql_fetch_assoc($result))
-	{
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+if($lival=="")
+{$ti="&nbsp";}
+else
+{$ti=$lival2;}
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
+}
+}
+}//search for last name end
+//search for first name
+if($_POST['query']=='First Name')
+{
+$result=mysql_query("select distinct user_id from User where type='Student' and first_name=\"".$_POST['txtSearch']."\"");
+while($row = mysql_fetch_assoc($result))
+{
+$id=$row['user_id'];
+$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
-	$lival=mysql_fetch_assoc($logIn);
-	$lival2=$lival['user_time'];
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($lival=="")
-	{$ti="&nbsp";}
-	else
-	{$ti=$lival2;}
+while($row2=mysql_fetch_assoc($result2))
+{
+$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
+$lival=mysql_fetch_assoc($logIn);
+$lival2=$lival['user_time'];
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
 
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
-	}
-	}
-	}//search for class end	
+if($lival=="")
+{$ti="&nbsp";}
+else
+{$ti=$lival2;}
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td>";
+}
+}
+}//search for first name end
+//search for middle name
+if($_POST['query']=='Middle Name')
+{
+$result=mysql_query("select distinct user_id from User where type='Student' and middle_name=\"".$_POST['txtSearch']."\"");
+while($row = mysql_fetch_assoc($result))
+{
+$id=$row['user_id'];
+$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+
+while($row2=mysql_fetch_assoc($result2))
+{
+$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
+$lival=mysql_fetch_assoc($logIn);
+$lival2=$lival['user_time'];
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
+
+if($lival=="")
+{$ti="&nbsp";}
+else
+{$ti=$lival2;}
+
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
+}
+}
+}//search for middle name end
+//search for class
+if($_POST['query']=='Class')
+{
+$result=mysql_query("select distinct user_id from User where type='Student' and class=\"".$_POST['txtSearch']."\"");
+while($row = mysql_fetch_assoc($result))
+{
+$id=$row['user_id'];
+$result2=mysql_query("SELECT User.last_name,User.first_name, User.middle_name,User.class from User where User.user_id='$id'");
+
+while($row2=mysql_fetch_assoc($result2))
+{
+$logIn=mysql_query("select user_time as user_time from User_Log where user_id='$id' order by user_date desc, user_time desc");
+$lival=mysql_fetch_assoc($logIn);
+$lival2=$lival['user_time'];
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
+
+if($lival=="")
+{$ti="&nbsp";}
+else
+{$ti=$lival2;}
+
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti</td></tr>";
+}
+}
+}//search for class end
 }
 
 //output for datagrid
 while($row = mysql_fetch_assoc($result))
 {
-	$ti2="";
-	$id=$row['user_id'];
-	$result2=mysql_query("SELECT distinct User.last_name,User.first_name, User.middle_name,User.class,(select user_time from User_Log where user_id='$id' order by user_date desc, user_time desc limit 1)as user_time from User left join User_Log on User.user_id=User_Log.user_id where User.user_id='$id'");
+$ti2="";
+$id=$row['user_id'];
+$result2=mysql_query("SELECT distinct User.last_name,User.first_name, User.middle_name,User.class,(select user_time from User_Log where user_id='$id' order by user_date desc, user_time desc limit 1)as user_time from User left join User_Log on User.user_id=User_Log.user_id where User.user_id='$id'");
 
-	while($row2=mysql_fetch_assoc($result2))
-	{
-	echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
-	//$ti=$row2['user_log_id'];
-	//$result3=mysql_query("select user_time from User_Log where user_log_id='$ti' and date='$date'");
-	//while($row3=mysql_fetch_assoc($result3))
-	$ti2=$row2['user_time'];	
-	$lname=$row2['last_name'];
-	$fname=$row2['first_name'];
-	$mname=$row2['middle_name'];
-	$class=$row2['class'];
-	
-	if($ti2=="")
-	{$ti3="&nbsp";}
-	else
-	{$ti3=$ti2;}
+while($row2=mysql_fetch_assoc($result2))
+{
+echo"<tr><td><input type=checkbox name=chk[] value=$id></td>";
+//$ti=$row2['user_log_id'];
+//$result3=mysql_query("select user_time from User_Log where user_log_id='$ti' and date='$date'");
+//while($row3=mysql_fetch_assoc($result3))
+$ti2=$row2['user_time'];	
+$lname=$row2['last_name'];
+$fname=$row2['first_name'];
+$mname=$row2['middle_name'];
+$class=$row2['class'];
 
-	echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti3</td></tr>";
-	}
+if($ti2=="")
+{$ti3="&nbsp";}
+else
+{$ti3=$ti2;}
+
+echo"<td><input type='submit' name=btn value='$id'></td><td>$lname</td><td>$fname</td><td>$mname</td><td>$class</td><td>$ti3</td></tr>";
+}
 }
 
 echo"</td></table><br/><div>";
-	
+
 //if "log" is clicked
 if(isset($_POST['btnLogin']))
 {
-	
-	if(!empty($_POST['chk'])) 
-	{
-		foreach($_POST['chk'] as $value)
-		{
-		mysql_query("INSERT INTO User_Log(user_id,user_time,user_date) VALUES('$value','$user_time','$date')");
-		}
-		try{header('location:admin.php');}
-		catch(exception $x){}
-	}
+
+if(!empty($_POST['chk']))
+{
+foreach($_POST['chk'] as $value)
+{
+mysql_query("INSERT INTO User_Log(user_id,user_time,user_date) VALUES('$value','$user_time','$date')");
+}
+try{header('location:admin.php');}
+catch(exception $x){}
+}
 }
 //right pane
-echo"<div id=right>
-<div id='tables'>";
+echo"<span class='redhd'><h3>Log Details</h3></span>";
+echo"<div id=right>";
+echo"<div id='tables'>";
 echo"<form method=post>";
-//add user_user_time
+//add user_time
 if(isset($_POST['btnAdd']))
 {
   if(empty($_POST['chk']))
   {echo"<script>alert('Please choose for whom to add time.');</script>";}
-else{
-$_SESSION['idval']=$_POST['chk'];
-echo"<table border=1>";
-echo"
-<span class='redh'><h3>Log Details&emsp;<input type=submit name=btnaSave value='Save' class='log'></h3></span><br/><br/><br/>
-<table border=1 class=details>";
-echo"<td><span class='redh'>User ID</span></td><td><span class='redh'>hh</span></td><td><span class='redh'>mm</span></td><td><span class='redh'>Date</span></td>";
-    if(!empty($_POST['chk'])) 
-    {
-	foreach($_POST['chk'] as $value)
-	{
-         $result=mysql_query("select user_id from User where user_id='$value'");
-	while($arow=mysql_fetch_assoc($result))
-	{
-	$id=$arow['user_id'];
-	echo"<tr><td>$id</td>
-	<td><input type=text name=atxt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1/></td>
-	<td><input type=text name=atxt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1/></td>
-        <td><input id=\"datepick2\" name=date2[] size=\"2\" onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=8/></td></tr>";
-        //script date picker
-        echo"<script>new datepickr('datepick2',{'dateFormat': 'm/d/y'});</script>";
-	}
-	}
-    }}
+  else{
+    $_SESSION['idval']=$_POST['chk'];
+    echo"<table border=1>";
+    echo"
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+    <input type=submit name=btnaSave value='Save' class='log'><br/><br/><br/>
+    <table border=1 class=details>";
+    echo"<td><span class='redh'>User ID</span></td><td><span class='redh'>hh</span></td><td><span class='redh'>mm</span></td><td>
+         <span class='redh'>Date</span></td>";
+   	if(!empty($_POST['chk']))
+        {
+          foreach($_POST['chk'] as $value)
+          {
+           $result=mysql_query("select user_id from User where user_id='$value'");
+           while($arow=mysql_fetch_assoc($result))
+           {
+            $id=$arow['user_id'];
+            echo"<tr><td>$id</td>
+	     <td><input type=text name=atxt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1/></td>
+   	     <td><input type=text name=atxt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1/></td>
+	     <td><input id=datepick2 name=date2[] size=2 onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=8/></td></tr>";
+             //script date picker
+           }
+         echo"<script>new datepickr('datepick2',{'dateFormat': 'm/d/y'});</script>";
+          }
+        }
+      }
+echo"<script>new datepickr('datepick2',{'dateFormat': 'm/d/y'});</script>";
 }
 //to save added user_time
 if(isset($_POST['btnaSave']))
-{  $x=0;
+{ $x=0;
    $y=1;
    $z=0;
    $v=$_POST['atxt'];
@@ -305,77 +310,71 @@ if(isset($_POST['btnaSave']))
    $date2=$_POST['date2'];
 foreach($_SESSION['idval'] as $idarr)
    {
-   if($date2==$date){   
-   if($v[$x]>23||$v[$y]>59||$v=='a'||$v=='b'||$v=='c'||$v=='d'||$v=='e'||$v=='f'||$v=='g'||$v=='h'||$v=='i'||$v=='j'||$v=='k'||$v=='l'||$v=='m'||$v=='n'||$v=='o'||$v=='p'||$v=='q'||$v=='r'||$v=='s'||$v=='t'||$v=='u'||$v=='v'||$v=='w'||$v=='x'||$v=='y'||$v=='z')
-   {echo"<script>alert('Invalid Time');</script>";}
+   if($v[$x]==""||$v[$y]==""||$date2[$z]=="")
+   {echo"<script>alert('Input all fields!');</script>";}
    
-   else if(strlen($v[$x])!=2||strlen($v[$y])!=2)
-    {echo"<script>alert('Invalid Input,Input should be 2 digits');</script>";}
-
-   else if($v[$x]>$h)
-   {echo"<script>alert('Invalid Time');</script>";}
-
-   else{
-   if($v[$x]==$h&&$v[$y]<=$m)
+   else if($date2[$z]>$date)
+   {echo"<script>alert('Invalid Date!');</script>";}
+   
+   else if($date2[$z]==$date)
    {
-   $time=$_POST['atxt'][$x].':'.$_POST['atxt'][$y];
-   mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");
-   $x+=2;
-   $y+=2;
-   $z+=1;
-   header('location:admin.php');}
-   else if($v[$x]<$h&&$v[$x]!=""&&$v[$y]!="")
-   { 
-   $time=$_POST['atxt'][$x].':'.$_POST['atxt'][$y];
-   mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");
-   $x+=2;
-   $y+=2;
-   $z+=1;
-   header('location:admin.php');}
+   $time=$v[$x].':'.$v[$y];
+   if($v[$x]>23||$v[$y]>59||$v=='a'||$v=='b'||$v=='c'||$v=='d'||$v=='e'||$v=='f'||$v=='g'||$v=='h'||$v=='i'||$v=='j'||$v=='k'||$v=='l'||$v=='m'||$v=='n'||$v=='o'||$v=='p'||$v=='q'||$v=='r'||$v=='s'||$v=='t'||$v=='u'||$v=='v'||$v=='w'||$v=='x'||$v=='y'||$v=='z')
+          {echo"<script>alert('Invalid Time');</script>";}
+   
+        else if(strlen($v[$x])!=2||strlen($v[$y])!=2)
+          {echo"<script>alert('Invalid Input,Input should be 2 digits');</script>";}
 
-   else if($v[$x]==""||$v[$y]=="")
-   {$x+=2;
-    $y+=2;
-    $z+=1;}
-   else
-   {echo"<script>alert('Invalid Input');</script>";}
-   }//end of else
-   }// end of if date==current date validation
-   else if($date2>$date)
-   {$time=$_POST['atxt'][$x].':'.$_POST['atxt'][$y];
-   if($v[$x]==""||$v[$y]=="")
-   {echo"<script>alert('Input all fields');</script>";}
-    else{
-    if($v[$x]>23||$v[$y]>59||$v=='a'||$v=='b'||$v=='c'||$v=='d'||$v=='e'||$v=='f'||$v=='g'||$v=='h'||$v=='i'||$v=='j'||$v=='k'||$v=='l'||$v=='m'||$v=='n'||$v=='o'||$v=='p'||$v=='q'||$v=='r'||$v=='s'||$v=='t'||$v=='u'||$v=='v'||$v=='w'||$v=='x'||$v=='y'||$v=='z')
-   {echo"<script>alert('Invalid Time');</script>";}
-    else if(strlen($_POST['txt'][$x])!=2||strlen($_POST['txt'][$y])!=2)
-    {echo"<script>alert('Invalid Input,Input should be 2 digits');</script>";}
-    else{
-    mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");}
-    $x+=2;
-    $y+=2;
-    $z+=1;
-    header('location:admin.php');}
-   }
-   else if($date2==""||$v[$x]==""||$v[$y]=="")
-   {
-   echo"<script>alert('Input all fields');</script>";
-   }
+        else if($v[$x]>$h)
+          {echo"<script>alert('Invalid Time');</script>";}
 
-   else if($date2<$date)
-   {
-   echo"<script>alert('Invalid Date');</script>";
-   }
+        else {
+          	 if($v[$x]==$h&&$v[$y]<=$m)
+           	{
+     	   	 mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");
+   	   	 $x+=2;
+   	   	 $y+=2;
+   	   	 $z+=1;
+  	   	 header('location:admin.php');}
+         	 else if($v[$x]<$h&&$v[$x]!=""&&$v[$y]!="")
+         	 {
+   	   	 mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");
+  	   	 $x+=2;
+ 	   	 $y+=2;
+  	   	 $z+=1;
+  	   	 header('location:admin.php');
+	 	 }
+
+          	 else if($v[$x]==""||$v[$y]=="")
+           	 {$x+=2; $y+=2; $z+=1;}
+         	 else
+           	 {echo"<script>alert('Invalid Input');</script>";}
+   	      }
+     }
+     else
+     {
+      $time=$v[$x].':'.$v[$y];
+    		
+      if($v[$x]>23||$v[$y]>59||$v=='a'||$v=='b'||$v=='c'||$v=='d'||$v=='e'||$v=='f'||$v=='g'||$v=='h'||$v=='i'||$v=='j'||$v=='k'||$v=='l'||$v=='m'||$v=='n'||$v=='o'||$v=='p'||$v=='q'||$v=='r'||$v=='s'||$v=='t'||$v=='u'||$v=='v'||$v=='w'||$v=='x'||$v=='y'||$v=='z')
+         {echo"<script>alert('Invalid Time');</script>";}
+      else if(strlen($v[$x])!=2||strlen($v[$y])!=2)
+         {echo"<script>alert('Invalid Input,Input should be 2 digits');</script>";}
+      else{mysql_query("insert into User_Log(user_id,user_time,user_date) values('$idarr','$time','$date2[$z]')");}
+    	    $x+=2;
+            $y+=2;
+   	    $z+=1;
+       header('location:admin.php');
+     }
+
    }//end of foreach
 }//end of btnsave
 //log details
 if(isset($_POST['btn']))
 {
 echo"
-<span class='redh'><h3>Log Details&emsp;<input type=submit name=btnSave value='Save' class='log'></h3></span><br/><br/><br/>
 <table border=1 class=details>";
  $_SESSION['date']=$date;
-echo'&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input id="datepick2" name=date size="5" placeholder="Search date"/><input type="image" name="search" src=search.png height="20px" />';
+echo'<input id="datepick2" name=date size="5" placeholder="Search date"/><input type="image" name="search" src=search.png height="20px" />&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type=submit name=btnSave value=\'Save\' class=\'log\'>';
 
 //script date picker
 echo"<script>new datepickr('datepick2',{'dateFormat': 'm/d/y'});</script>";
@@ -392,8 +391,8 @@ $view=$log2['user_id'];
 $view2=$log2['user_time'];
 $view3=$log2['user_time2'];
 echo"<tr><td>$view</td>
-     <td><input type=text value='$view2' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td>
-     <td><input type=text value='$view3' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td></tr>";
+<td><input type=text value='$view2' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td>
+<td><input type=text value='$view3' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td></tr>";
 }
 }
 //save the update time
@@ -433,7 +432,7 @@ if($_SESSION['date']==$date){
     $y+=2;
     header('location:admin.php');}
     else if($v[$x]<$h)
-    { 
+    {
     $time=$v[$x].':'.$v[$y];
     mysql_query("update User_Log set user_time='$time' where user_log_id='$logid'");
     $x+=2;
@@ -459,10 +458,9 @@ if(isset($_POST['search_x']))
 {
 $_SESSION['date']=$_POST['date'];
 echo"
-<span class='redh'><h3>Log Details&emsp;<input type=submit name=btnSave value='Save' class='log'></h3></span><br/><br/><br/>
 <table border=1 class=details>";
  
-echo'&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input id="datepick2" name=date size="5" placeholder="Search date"/><input type="image" name="search" src=search.png height="20px" /><br/>';
+echo'<input id="datepick2" name=date size="5" placeholder="Search date"/><input type="image" name="search" src=search.png height="20px" />&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type=submit name=btnSave value=Save class=slog>';
 
 //date picker
 echo"<script>new datepickr('datepick2',{'dateFormat': 'm/d/y'});</script>";
@@ -478,8 +476,8 @@ $view=$log2['user_id'];
 $view2=$log2['user_time'];
 $view3=$log2['user_time2'];
 echo"<tr><td>$view</td>
-     <td><input type=text value='$view2' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td>
-     <td><input type=text value='$view3' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td></tr>";
+<td><input type=text value='$view2' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td>
+<td><input type=text value='$view3' name=txt[] onkeyup=\"this.value = this.value.replace(/[^0-9]/,'')\" maxlength=2 size=1></td></tr>";
 }
 }
 echo"</form>";

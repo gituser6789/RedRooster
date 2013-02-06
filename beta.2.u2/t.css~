@@ -48,6 +48,17 @@ padding: 2px 5px;
 width: 60px;
 }
 
+.slog{
+background-image: -moz-linear-gradient(right , rgb(178,33,35) 4%, rgb(133,24,22) 67%);
+color: #ffffff;
+border-radius: 5px;
+border: 2px #4D4C47 solid;
+text-decoration: none;
+padding: 2px 5px;
+width: 60px;
+}
+
+
 .timebtn{
 background-image: -moz-linear-gradient(right , rgb(178,33,35) 4%, rgb(133,24,22) 67%);
 color: #ffffff;
@@ -82,7 +93,7 @@ background-image: -moz-linear-gradient(bottom, rgb(233,239,245) 4%, rgb(255,255,
 
 #tblform{
 width: 95%;
-height: 350px;
+height: 370px;
 color: #4D4C47;
 padding: 20px;
 border-radius: 10px;
@@ -146,26 +157,27 @@ line-height: 3;
 
 #left{
 position: fixed;
+top: 265px;
 line-height: 0;
 width: 60%;
-height: 400px;
+height: 370px;
 overflow-y: scroll;
 }
 
 #right{
 position: fixed;
-top: 175px;
+top: 265px;
 right: 50px;
 line-height: 0;
 float:right;
 width: 30%;
-height:400px;
+height:370px;
 overflow-y: scroll;
 
 }
 
 table{
-top: 25px;
+top: 300px;
 font-size: 14px;
 width:100%;
 border:1px solid #D51C21;
@@ -226,6 +238,15 @@ font-size: 26px;
 }
 
 .redh{
+color: #C32148;
+font-size: 16px;
+font-weight: bold;
+}
+
+.redhd{
+position: fixed;
+top: 190px;
+right: 300px;
 color: #C32148;
 font-size: 16px;
 font-weight: bold;
